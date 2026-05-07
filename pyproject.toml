@@ -1,0 +1,24 @@
+[project]
+name = "cinecoder"
+version = "0.1.0"
+description = "Watch Claude Code sessions unfold as movie posters, then guess the film"
+requires-python = ">=3.8"
+dependencies = [
+    "rich>=13.0.0",
+    "watchdog>=3.0.0",
+    "click>=8.0.0",
+]
+
+[project.scripts]
+cinecoder = "cinecoder.main:cli"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["cinecoder*"]
+
+[tool.setuptools.package-data]
+cinecoder = ["templates/*.json"]
+
+[build-system]
+requires = ["setuptools>=45", "wheel"]
+build-backend = "setuptools.build_meta"
