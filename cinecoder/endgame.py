@@ -58,7 +58,7 @@ def _full_reveal(engine: RevealEngine) -> None:
 
 def _run_guess(state: SessionState, engine: RevealEngine) -> None:
     console.print("\n" + "─" * 52)
-    console.print("[bold cyan]🎬 这是哪部电影？[/bold cyan]  （直接回车跳过）")
+    console.print(f"[bold cyan]🎬 {engine.question}[/bold cyan]  （直接回车跳过）")
 
     try:
         answer = input(">>> ").strip()
@@ -73,6 +73,9 @@ def _run_guess(state: SessionState, engine: RevealEngine) -> None:
         console.print(f"\n[yellow]差一点！答案是：[bold]{engine.title}[/bold][/yellow]")
         if engine.quote:
             console.print(f'[dim italic]"{engine.quote}"[/dim italic]')
+
+    if engine.insight:
+        console.print(f"\n[cyan italic]{engine.insight}[/cyan italic]")
 
     _show_stats(state, engine)
 

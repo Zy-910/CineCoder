@@ -64,6 +64,14 @@ class RevealEngine:
         return self._meta.get("quote", "")
 
     @property
+    def insight(self) -> str:
+        return self._meta.get("insight", "")
+
+    @property
+    def question(self) -> str:
+        return self._meta.get("question", "这是哪部电影？")
+
+    @property
     def width(self) -> int:
         return self._meta.get("width", 80)
 
