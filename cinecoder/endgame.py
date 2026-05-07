@@ -104,6 +104,7 @@ def _confetti_fall() -> None:
         for ci, ch in enumerate(congrats)
     )
 
+    sys.stdout.write("\033[?25l")  # hide cursor
     sys.stdout.write("\n" * _H)
 
     for frame in range(_H + 5):
@@ -132,6 +133,8 @@ def _confetti_fall() -> None:
         sys.stdout.flush()
         time.sleep(0.12)
 
+    sys.stdout.write("\033[?25h")  # restore cursor
+    sys.stdout.flush()
     print()
 
 
