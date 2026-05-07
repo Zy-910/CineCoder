@@ -97,20 +97,24 @@ def _celebrate(engine: RevealEngine) -> None:
         console.print(f'\n[bold green]"[italic]{engine.quote}[/italic]"[/bold green]')
 
 
-def _confetti_fall() -> None:
-    congrats = "Congratulations!"
-    congrats_colored = "".join(
-        f"\033[1;38;2;{_hue_rgb(ci * 22)[0]};{_hue_rgb(ci * 22)[1]};{_hue_rgb(ci * 22)[2]}m{ch}{_RST}"
+def _make_congrats(congrats: str, frame: int) -> str:
+    return "".join(
+        f"\033[1;38;2;{_hue_rgb(ci * 22 + frame * 18)[0]};{_hue_rgb(ci * 22 + frame * 18)[1]};{_hue_rgb(ci * 22 + frame * 18)[2]}m{ch}{_RST}"
         for ci, ch in enumerate(congrats)
     )
+
+
+def _confetti_fall() -> None:
+    congrats = "Congratulations!"
 
     sys.stdout.write("\033[?25l")  # hide cursor
     sys.stdout.write("\n" * _H)
 
+    # Phase 1: particles fall
     for frame in range(_H + 5):
+        congrats_colored = _make_congrats(congrats, frame)
         sys.stdout.write(f"\033[{_H}A")
 
-        # build sparse canvas
         canvas = [[' '] * 64 for _ in range(_H)]
         for col, delay, ch in _PARTICLES:
             row = frame - delay
@@ -132,6 +136,19 @@ def _confetti_fall() -> None:
 
         sys.stdout.flush()
         time.sleep(0.12)
+
+    # Phase 2: rainbow wave loops on congrats line only
+    rows_below = _H - _CROW - 1
+    deadline = time.time() + 4.0
+    frame = _H + 5
+    while time.time() < deadline:
+        congrats_colored = _make_congrats(congrats, frame)
+        sys.stdout.write(f"\033[{rows_below + 1}A")
+        sys.stdout.write(f"\r\033[2K{' ' * _CCOL}{congrats_colored}\n")
+        sys.stdout.write(f"\033[{rows_below}B")
+        sys.stdout.flush()
+        time.sleep(0.06)
+        frame += 1
 
     sys.stdout.write("\033[?25h")  # restore cursor
     sys.stdout.flush()
