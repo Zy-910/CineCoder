@@ -10,8 +10,8 @@ CineCoder 实时监听你的 [Claude Code](https://claude.ai/code) 会话，随�
 
 ## 玩法
 
-1. 在一个终端启动 Claude Code 会话
-2. 在另一个终端运行 `cinecoder start`
+1. 启动 Claude Code 会话（`claude`）
+2. 向右分屏，运行 `cinecoder start`
 3. 正常写代码——每个操作解锁一块 ASCII 电影海报
 4. 按 `Ctrl+C` 结束会话
 5. 若已解锁 ≥ 80%，你将有机会猜电影名
@@ -36,25 +36,28 @@ cd CineCoder
 pip install .
 ```
 
-然后直接运行：
-
-```bash
-cinecoder start
-```
-
 ---
 
 ## 使用
 
+推荐使用分屏布局——左边跑 Claude Code，右边跑 CineCoder：
+
+```
+┌─────────────────────┬─────────────────────┐
+│  $ claude           │  $ cinecoder start  │
+│                     │                     │
+│  （在这里写代码）    │  [海报逐渐解锁中]   │
+│                     │                     │
+└─────────────────────┴─────────────────────┘
+```
+
+在 **Ghostty** 中：启动会话后向右分屏（`Cmd+D`），在新 pane 里运行 `cinecoder start`，它会自动识别左侧的 Claude Code 会话。
+
 ```bash
-# 自动检测最近的 Claude Code 会话
-cinecoder start
-
-# 指定后端（默认：claude-code）
-cinecoder start --backend claude-code
-
-# 查看当前会话状态
-cinecoder status
+cinecoder start                            # 自动检测会话
+cinecoder start --template godfather       # 强制指定海报
+cinecoder start --backend claude-code      # 指定后端
+cinecoder status                           # 查看当前会话信息
 ```
 
 ---

@@ -10,8 +10,8 @@ CineCoder watches your [Claude Code](https://claude.ai/code) session in real tim
 
 ## How It Works
 
-1. Start a Claude Code session in one terminal
-2. Run `cinecoder start` in another terminal
+1. Start a Claude Code session (`claude`)
+2. Split your terminal right and run `cinecoder start`
 3. Code — each action unlocks a piece of the ASCII movie poster
 4. Press `Ctrl+C` to end the session
 5. If ≥ 80% of the poster is revealed, you get to guess the movie title
@@ -36,25 +36,28 @@ cd CineCoder
 pip install .
 ```
 
-Then simply run:
-
-```bash
-cinecoder start
-```
-
 ---
 
 ## Usage
 
+The recommended setup is a split terminal — left for Claude Code, right for CineCoder:
+
+```
+┌─────────────────────┬─────────────────────┐
+│  $ claude           │  $ cinecoder start  │
+│                     │                     │
+│  (coding here)      │  [poster unlocking] │
+│                     │                     │
+└─────────────────────┴─────────────────────┘
+```
+
+In **Ghostty**: open a session, split right (`Cmd+D`), run `cinecoder start` in the new pane. It auto-detects the Claude Code session on the left.
+
 ```bash
-# Auto-detect the most recent Claude Code session
-cinecoder start
-
-# Specify a backend (default: claude-code)
-cinecoder start --backend claude-code
-
-# Check current session status
-cinecoder status
+cinecoder start                            # auto-detect session
+cinecoder start --template godfather       # force a specific poster
+cinecoder start --backend claude-code      # specify backend
+cinecoder status                           # check active session info
 ```
 
 ---
